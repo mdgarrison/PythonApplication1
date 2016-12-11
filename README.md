@@ -1,1 +1,2 @@
-"# PythonApplication1" 
+This is a Python project hosted in Visual Studio 2015, using "Python Tools for Visual Studio" along with Python 3.5.2 and PyQt5.
+
