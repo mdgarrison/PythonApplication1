@@ -1,34 +1,25 @@
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from OpenGL import GL
+import sys
+from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5 import uic
 
-class Form(QWidget):
-    def __init__(self, parent=None):
-        super(Form, self).__init__(parent)
-        nameLabel = QLabel("Name:")
-        self.nameLine = QLineEdit()
-        self.submitButton = QPushButton("Submit")
-        buttonLayout1 = QVBoxLayout()
-        buttonLayout1.addWidget(nameLabel)
-        buttonLayout1.addWidget(self.nameLine)
-        buttonLayout1.addWidget(self.submitButton)
-        self.submitButton.clicked.connect(self.submitContact)
-        mainLayout = QGridLayout()
-        # mainLayout.addWidget(nameLabel, 0, 0)
-        mainLayout.addLayout(buttonLayout1, 0, 1)
-        self.setLayout(mainLayout)
-        self.setWindowTitle("Hello Qt")
-    def submitContact(self):
-        name = self.nameLine.text()
-        if name == "":
-            QMessageBox.information(self, "Empty Field", "Please enter a name and address.")
-            return
-        else:
-            QMessageBox.information(self, "Success!", "Hello %s!" % name)
+Ui_MainWindow, QtBaseClass = uic.loadUiType("MainWindow.ui")
 
-if __name__ == '__main__':
-    import sys
+class MyApp(QMainWindow):
+    def __init__(self):
+        super(MyApp, self).__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        self.ui.pushButton1.clicked.connect(self.HandlePushButton1Clicked)
+        self.ui.pushButton2.clicked.connect(self.HandlePushButton2Clicked)
+
+    def HandlePushButton1Clicked(self):
+        self.ui.textEdit1.setText("Hello")
+
+    def HandlePushButton2Clicked(self):
+        self.ui.textEdit1.setText("World")
+
+if __name__ == "__main__":
     app = QApplication(sys.argv)
-    screen = Form()
-    screen.show()
+    window = MyApp()
+    window.show()
     sys.exit(app.exec_())
