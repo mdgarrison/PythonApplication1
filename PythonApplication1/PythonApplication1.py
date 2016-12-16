@@ -1,7 +1,10 @@
 import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
+from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal
+import pyqtgraph as pg
+import numpy as np
 
 # This is pretty standard stuff for being able to load a .ui file
 Ui_MainWindow, QtBaseClass = uic.loadUiType("MainWindow.ui")
@@ -22,8 +25,8 @@ class MyApp(QMainWindow):
         self.ui.dial1.valueChanged.connect(self.ui.progressBar1.setValue)
         # Get in the habit of reading it like this:
         # CONNECT FROM(dial1.valueChanged) TO(progressBar1.setValue)
-        #     The object we call connect() on is the sender
-        #     The object we pass in as the parameter is the receiver
+        #     The object we call connect() on is the sender (the change producer)
+        #     The object we pass in as the parameter is the receiver (the change receiver)
 
         # Here's an example of connecting a widget to Python code; in this case,
         # the clicked status of a QButton is connected to a Python method
@@ -34,6 +37,9 @@ class MyApp(QMainWindow):
         # this case, a little more unusual connection between the values of the two
         # sliders
         self.ui.horizontalSlider1.valueChanged.connect(self.ui.verticalSlider1.setValue)
+
+        data = np.random.normal(size=1000)
+        self.ui.graphicsView1.plot(data)
 
     # This section of code shows an example of how to create a signal, how to connect it,
     # and how to emit it
